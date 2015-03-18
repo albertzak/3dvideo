@@ -1,0 +1,668 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wiener Ring in 360 Grad - Demo</title>
+    <style>
+
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      p {
+        font-family: helvetica;
+        font-size: 24px;
+      }
+
+      html, body {
+        background: black;
+        height: 100%;
+        width: 100%;
+      }
+
+      /* p3v Styles */
+
+      #p3v {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      #p3v video, 
+      #p3v img,
+      #p3v div,
+      #p3v canvas,
+      #p3v p {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+        width: auto;
+        margin: auto auto;
+        opacity: 0;
+
+        text-align: center;
+      }
+
+      /* IE 7 Image Quality fix, untested */
+      #p3v img {
+        -ms-interpolation-mode: bicubic;
+      }
+
+      .p3v-placeholder {
+        opacity: 1;
+      }
+
+      .p3v-error {
+        background: black;
+        color: white;
+        padding-top: 15px;
+      }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script>
+      /*
+       * jQuery throttle / debounce - v1.1 - 3/7/2010
+       * http://benalman.com/projects/jquery-throttle-debounce-plugin/
+       * 
+       * Copyright (c) 2010 "Cowboy" Ben Alman
+       * Dual licensed under the MIT and GPL licenses.
+       * http://benalman.com/about/license/
+       */
+      (function(b,c){var $=b.jQuery||b.Cowboy||(b.Cowboy={}),a;$.throttle=a=function(e,f,j,i){var h,d=0;if(typeof f!=="boolean"){i=j;j=f;f=c}function g(){var o=this,m=+new Date()-d,n=arguments;function l(){d=+new Date();j.apply(o,n)}function k(){h=c}if(i&&!h){l()}h&&clearTimeout(h);if(i===c&&m>e){l()}else{if(f!==true){h=setTimeout(i?k:l,i===c?e-m:e)}}}if($.guid){g.guid=j.guid=j.guid||$.guid++}return g};$.debounce=function(d,e,f){return f===c?a(d,e,false):a(d,f,e!==false)}})(this);
+      </script>
+
+      <script>
+      // Polyfill requestAnimFrame
+      // http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+      (function() {
+          var lastTime = 0;
+          var vendors = ['webkit', 'moz'];
+          for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+              window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+              window.cancelAnimationFrame =
+                window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+          }
+
+          if (!window.requestAnimationFrame)
+              window.requestAnimationFrame = function(callback, element) {
+                  var currTime = new Date().getTime();
+                  var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                  var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                    timeToCall);
+                  lastTime = currTime + timeToCall;
+                  return id;
+              };
+
+          if (!window.cancelAnimationFrame)
+              window.cancelAnimationFrame = function(id) {
+                  clearTimeout(id);
+                  };
+          }());
+      </script>
+
+  </head>
+  <body>
+    <div id="p3v">
+      
+      <video tabindex="0" autobuffer preload>
+
+        <source type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;" src="vi1-1.mp4" media="only screen and (min-device-width: 568px)"></source>
+
+        <source type="video/webm; codecs=&quot;vp8, vorbis&quot;" src="vi1-5.webm" media="only screen and (max-device-width: 568px)"></source>
+
+        <source type="video/ogg; codecs=&quot;theora, vorbis&quot;" src="vi1-1.ogv"></source>
+
+        
+      </video>
+
+      <canvas></canvas>
+
+      <img src="image/image-001.jpg" class="p3v-placeholder"></img>
+      <img src="image/image-002.jpg"></img>
+      <img src="image/image-003.jpg"></img>
+      <img src="image/image-004.jpg"></img>
+      <img src="image/image-005.jpg"></img>
+      <img src="image/image-006.jpg"></img>
+      <img src="image/image-007.jpg"></img>
+      <img src="image/image-008.jpg"></img>
+      <img src="image/image-009.jpg"></img>
+      <img src="image/image-010.jpg"></img>
+      <img src="image/image-011.jpg"></img>
+      <img src="image/image-012.jpg"></img>
+      <img src="image/image-013.jpg"></img>
+      <img src="image/image-014.jpg"></img>
+      <img src="image/image-015.jpg"></img>
+      <img src="image/image-016.jpg"></img>
+      <img src="image/image-017.jpg"></img>
+      <img src="image/image-018.jpg"></img>
+      <img src="image/image-019.jpg"></img>
+      <img src="image/image-020.jpg"></img>
+      <img src="image/image-021.jpg"></img>
+      <img src="image/image-022.jpg"></img>
+      <img src="image/image-023.jpg"></img>
+      <img src="image/image-024.jpg"></img>
+      <img src="image/image-025.jpg"></img>
+      <img src="image/image-026.jpg"></img>
+      <img src="image/image-027.jpg"></img>
+      <img src="image/image-028.jpg"></img>
+      <img src="image/image-029.jpg"></img>
+      <img src="image/image-030.jpg"></img>
+      <img src="image/image-031.jpg"></img>
+      <img src="image/image-032.jpg"></img>
+      <img src="image/image-033.jpg"></img>
+      <img src="image/image-034.jpg"></img>
+      <img src="image/image-035.jpg"></img>
+      <img src="image/image-036.jpg"></img>
+      <img src="image/image-037.jpg"></img>
+      <img src="image/image-038.jpg"></img>
+      <img src="image/image-039.jpg"></img>
+      <img src="image/image-040.jpg"></img>
+      <img src="image/image-041.jpg"></img>
+      <img src="image/image-042.jpg"></img>
+      <img src="image/image-043.jpg"></img>
+      <img src="image/image-044.jpg"></img>
+      <img src="image/image-045.jpg"></img>
+      <img src="image/image-046.jpg"></img>
+      <img src="image/image-047.jpg"></img>
+      <img src="image/image-048.jpg"></img>
+      <img src="image/image-049.jpg"></img>
+      <img src="image/image-050.jpg"></img>
+      <img src="image/image-051.jpg"></img>
+      <img src="image/image-052.jpg"></img>
+      <img src="image/image-053.jpg"></img>
+      <img src="image/image-054.jpg"></img>
+      <img src="image/image-055.jpg"></img>
+      <img src="image/image-056.jpg"></img>
+      <img src="image/image-057.jpg"></img>
+      <img src="image/image-058.jpg"></img>
+      <img src="image/image-059.jpg"></img>
+      <img src="image/image-060.jpg"></img>
+      <img src="image/image-061.jpg"></img>
+      <img src="image/image-062.jpg"></img>
+      <img src="image/image-063.jpg"></img>
+      <img src="image/image-064.jpg"></img>
+      <img src="image/image-065.jpg"></img>
+      <img src="image/image-066.jpg"></img>
+      <img src="image/image-067.jpg"></img>
+      <img src="image/image-068.jpg"></img>
+      <img src="image/image-069.jpg"></img>
+      <img src="image/image-070.jpg"></img>
+      <img src="image/image-071.jpg"></img>
+      <img src="image/image-072.jpg"></img>
+      <img src="image/image-073.jpg"></img>
+      <img src="image/image-074.jpg"></img>
+      <img src="image/image-075.jpg"></img>
+      <img src="image/image-076.jpg"></img>
+      <img src="image/image-077.jpg"></img>
+      <img src="image/image-078.jpg"></img>
+      <img src="image/image-079.jpg"></img>
+      <img src="image/image-080.jpg"></img>
+      <img src="image/image-081.jpg"></img>
+      <img src="image/image-082.jpg"></img>
+      <img src="image/image-083.jpg"></img>
+      <img src="image/image-084.jpg"></img>
+      <img src="image/image-085.jpg"></img>
+      <img src="image/image-086.jpg"></img>
+      <img src="image/image-087.jpg"></img>
+      <img src="image/image-088.jpg"></img>
+      <img src="image/image-089.jpg"></img>
+      <img src="image/image-090.jpg"></img>
+
+      <p class="p3v-placeholder">
+        Loading...
+      </p>
+
+      <p class="p3v-unsupported">
+        Sorry! Your device is too old.
+      </p>
+    </div>
+
+    <script>
+      "use strict";
+
+      window.p3v = function(selector, options) {
+        _p3v.fn.init(selector, options);
+      };
+
+      window._p3v = {
+        defaults: {
+          reverse: false,
+          inertia: 0.03,
+          bind: null,
+          direction: 'horizontal'
+        },
+
+        options: {},
+
+        device: {
+          video: null,
+          photos: null,
+          width: $(window).width()
+        },
+
+        selector: '#p3v',
+        el: null,
+
+        vars: {
+          duration: 1,
+          lastPosition: 1,
+          scaledTargetPosition: 0.2,
+          targetPosition: 1,  // Index if photo to display before any mouse movements
+          videoPosition: 0.2, // Safari bug when <= 0.1
+        },
+
+        fn: {
+          // This is the main entry point
+          init: function(selector, options) {
+            // If there's only one argument and it's
+            // an object, parse it as options
+            if ( ! options && typeof selector === 'object') {
+              _p3v.fn.setOptions(selector);
+              _p3v.selector = _p3v.selector;
+            }
+
+            if ( ! selector)
+              _p3v.selector = _p3v.selector;
+
+            _p3v.fn.setOptions(options);
+
+            // Allow only one video element per page
+            // TODO: Support multiple elements
+            // TODO: Progressively enhance a single img tag
+            _p3v.el = $(_p3v.selector);
+            _p3v.elVideo = $(_p3v.selector).children('video')[0];
+            _p3v.elCanvas = $(_p3v.selector).find('canvas')[0];
+            _p3v.elPhotos = $(_p3v.selector).find('img');
+
+
+            // Get features supported by the device and browser
+            _p3v.device = _p3v.fn.deviceInfo();
+
+            // Calculate initial dimensions
+            $(_p3v.elPhotos[0]).ready(_p3v.fn.resize);
+
+            // Listen for Mouse/Touch events
+            _p3v.fn.bindHandlers();
+
+            // Is the video element supported?
+            if (_p3v.device.video) {
+              console.log('Detected video support. Waiting for video to load');
+              _p3v.mode = 'video'
+
+              // Wait until the video has finished loading
+              if (_p3v.elVideo.duration > 1) { _p3v.fn.initWithVideo() }
+              _p3v.elVideo.addEventListener('loadeddata', _p3v.fn.initWithVideo, false);
+
+            // Fallback #1 to canvas
+            } else if (_p3v.device.canvas) {
+              console.log('Detected canvas but no video support');
+              _p3v.mode = 'canvas'
+
+              _p3v.fn.initWithCanvas();
+
+            // Fallback #2 to photos
+            } else {
+              console.log('No video or canvas tag supported, falling back to photos');
+              _p3v.mode = 'photos'
+
+              $('.p3v-placeholder').removeClass('.p3v-placeholder');
+
+              _p3v.fn.initWithPhotos();
+            }
+          },
+
+          deviceInfo: function() {
+            var device     = {};
+            device.android = _p3v.fn.userAgent('Android');
+            
+            device.video   = (_p3v.elVideo && _p3v.elVideo.canPlayType && _p3v.fn.userAgent('Intel Mac OS X 10_10') && _p3v.fn.userAgent('Safari') && _p3v.fn.userAgent('AppleWebKit/600'));
+
+            device.canvas  = !!(_p3v.elCanvas.getContext && _p3v.elCanvas.getContext('2d'))
+            device.photo   = true;
+
+            return device;
+          },
+
+          initWithVideo: function() {
+            console.log('Initializing video');
+
+            _p3v.vars.duration = _p3v.elVideo.duration;
+
+            $(_p3v.elVideo).css('opacity', 1);
+            $('.p3v-placeholder').removeClass('.p3v-placeholder');
+
+            if ( ! _p3v.options.reverse)
+              _p3v.fn.position = function() {
+                return _p3v.vars.targetPosition * _p3v.vars.duration;
+              }
+            else
+              _p3v.fn.position = function() {
+                return _p3v.vars.duration - _p3v.vars.targetPosition * _p3v.vars.duration;
+              }
+
+            _p3v.fn.draw = function(targetPosition) {
+              var position = targetPosition;
+              // Fix for old Mobile Safari
+              _p3v.elVideo.currentTime = position + 0.2;
+            };
+
+            _p3v.fn.startDraw();
+          },
+
+          initWithCanvas: function() {
+            // Which photo should we show?
+            if ( ! _p3v.options.reverse)
+              _p3v.fn.position = function() {
+                return Math.floor(_p3v.vars.targetPosition * _p3v.elPhotos.length);
+              }
+            else
+              _p3v.fn.position = function() {
+                return (_p3v.elPhotos.length - 1) - Math.floor(_p3v.vars.targetPosition * _p3v.elPhotos.length);
+              }
+
+            // Draw letterboxed photo into canvas
+            // The scaled/offset values are calculated by _p3v.fn.resize()
+            _p3v.fn.draw = function(position) {
+              var image = _p3v.elPhotos[position];
+
+              _p3v.vars.canvasContext.drawImage(image, 0, 0,
+                _p3v.vars.photoWidth,
+                _p3v.vars.photoHeight);
+            }
+
+            // As soon as we can fetch the dimensions
+            // of the first photo, start drawing
+            $(_p3v.elPhotos).ready(function() {
+              _p3v.vars.canvasContext = _p3v.elCanvas.getContext('2d');
+              _p3v.fn.resize();
+              $(_p3v.elCanvas).css('opacity', 1);
+              _p3v.fn.startDraw();
+              console.log('Initialized canvas');
+            });
+          },
+
+          initWithPhotos: function() {
+            console.log('Initializing', _p3v.elPhotos.length, 'photos');
+
+            _p3v.elPhotos.css({'opacity': 0});
+
+            // TODO: Cleaner implementation, remove duplicate
+            // code shared with initWithCanvas
+            if ( ! _p3v.options.reverse)
+              _p3v.fn.position = function() {
+                return Math.floor(_p3v.vars.targetPosition * _p3v.elPhotos.length);
+              }
+            else
+              _p3v.fn.position = function() {
+                return (_p3v.elPhotos.length - 1) - Math.floor(_p3v.vars.targetPosition * _p3v.elPhotos.length);
+              }
+            // Hide all photos, and then show one only
+            // Setting opacity is faster than .hide()
+            _p3v.fn.draw = function(position) {
+              $(_p3v.elPhotos.css({'opacity': 0})[position]).css({'opacity': 1})
+            }
+
+            _p3v.fn.startDraw();
+          },
+
+          // Everything's initialized now, start drawing
+          startDraw: function() {
+
+            // Method 1: AnimationFrame inside Interval
+            // var delay = 4;
+            // _p3v.vars.drawInterval = setInterval(function() {
+            //   _p3v.vars.animationFrame = requestAnimationFrame(_p3v.fn.doDraw);
+            // }, delay);
+
+            // Method 2: AnimationFrame only
+            requestAnimationFrame(function() {
+              _p3v.fn.doDraw();
+              _p3v.fn.startDraw();
+            });
+          },
+
+          doDraw: function() {
+            var targetPosition = _p3v.fn.position();
+
+            if (targetPosition < 0)
+              targetPosition = 1;
+
+            _p3v.fn.draw(targetPosition);
+
+            // if ( (window._lastPosition || 0) != position)
+            //   console.log('Position:', position);
+            // window._lastPosition = position;
+          },
+
+          mousemove: $.debounce(6, function(e) {
+              _p3v.vars.targetPosition = e.pageX / _p3v.device.width;
+          }),
+
+          resize: function() {
+            _p3v.device.width  = $(window).width();
+            _p3v.vars.elWidth  = $(_p3v.selector).width();
+            _p3v.vars.elHeight = $(_p3v.selector).height();
+
+            if (_p3v.mode == 'canvas') {
+              _p3v.vars.photoWidth  = $(_p3v.elPhotos[0]).width();
+              _p3v.vars.photoHeight = $(_p3v.elPhotos[0]).height();
+
+              _p3v.elCanvas.width  = _p3v.vars.photoWidth;
+              _p3v.elCanvas.height = _p3v.vars.photoHeight;
+            }
+          },
+
+          bindHandlers: function() {
+            window.addEventListener('resize',            _p3v.fn.resize, false);
+            window.addEventListener('orientationchange', _p3v.fn.resize, false);
+            window.addEventListener('mousemove',         _p3v.fn.mousemove, false);
+
+            // There's a bug in Android's touchmove
+            // TODO: Restore scrolling
+            // http://uihacker.blogspot.tw/2011/01/android-touchmove-event-bug.html
+            if (_p3v.device.android) {
+              console.log('Detected Android, enabling swipe shim');
+
+              // var c = document.getElementById('p3v');
+              // c.addEventListener("swipeStart", console.log, false);
+              // c.addEventListener("swipeMove", console.log, false);
+              // c.addEventListener("swipeEnd", console.log, false);
+              // c.addEventListener("swipeUp", console.log, false);
+              // c.addEventListener("swipeDown", console.log, false);
+              // c.addEventListener("swipeLeft", console.log, false);
+              // c.addEventListener("swipeRight", console.log, false);
+              // c.addEventListener("scroll", console.log, false);
+
+              window.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+              });
+            }
+
+            window.addEventListener('touchmove', function(e) {
+              e.preventDefault();
+              _p3v.vars.targetPosition = e.pageX / _p3v.device.width;
+            });
+
+          },
+
+          unbindHandlers: function() {
+            window.onmousemove = undefined;
+          },
+
+          stop: function() {
+            _p3v.fn.unbindHandlers();
+            cancelAnimationFrame(_p3v.vars.animationFrame);
+            clearInterval(_p3v.vars.drawInterval);
+          },
+
+          setOptions: function(options) {
+            if (typeof options === 'undefined')
+              options = {};
+            if (typeof _p3v.options === 'undefined')
+              _p3v.options = {};
+
+            _p3v.options = $.extend(
+              $.extend(_p3v.defaults, _p3v.options),
+              options);
+          },
+
+          userAgent: function(search) {
+            return (navigator.userAgent.toLowerCase().indexOf(search.toLowerCase()) >= 0);
+          },
+
+          round: function(number, decimals) {
+            return +(Math.round(number + "e+" + decimals) + "e-" + decimals);
+          }
+        }
+      };
+
+
+
+    </script>
+
+      <script>
+        // Android swipe shim / ezswipe
+        // https://github.com/TNT-RoX/android-swipe-shim
+
+        (function() {
+          var ezswipe_container, ezswipe_surface, i, style, _droid_swipe, _ezSwipes;
+          _droid_swipe = function(el) {
+            var dispatchEvent, _child;
+            dispatchEvent = function(name, delta) {
+              var event, settings;
+              settings = {
+                detail : {
+                  delta : delta,
+                  bubbles : false,
+                  cancelable : true
+                }
+              };
+              el.parentNode.dispatchEvent(new CustomEvent(name, settings));
+            };
+            _child = el.querySelectorAll("._ezswipe_surface")[0];
+            el.ezSwipe = {
+              center : {
+                x : (_child.clientWidth / 2) - (el.clientWidth / 2),
+                y : (_child.clientHeight / 2) - (el.clientHeight / 2)
+              },
+              timer : null,
+              scrolling : false,
+              starttime : 0,
+              last : {
+                x : 0,
+                y : 0,
+                t : 0
+              }
+            };
+            el.scrollLeft = el.ezSwipe.center.x;
+            el.scrollTop = el.ezSwipe.center.y;
+            el.onscroll = function(e) {
+              var d, delta;
+              d = new Date().getTime();
+              if ((el.scrollLeft !== el.ezSwipe.center.x) || (el.scrollTop !== el.ezSwipe.center.y)) {
+                if (!el.ezSwipe.scrolling) {
+                  delta = {
+                    x : 0,
+                    y : 0,
+                    t : 0
+                  };
+                  el.ezSwipe.starttime = d;
+                  el.ezSwipe.last = delta;
+                  dispatchEvent("swipeStart", delta);
+                  el.ezSwipe.scrolling = true;
+                } else {
+                  delta = {
+                    x : el.ezSwipe.center.x - el.scrollLeft - el.ezSwipe.last.x,
+                    y : el.ezSwipe.center.y - el.scrollTop - el.ezSwipe.last.y,
+                    t : d - el.ezSwipe.starttime - el.ezSwipe.last.t
+                  };
+                  el.ezSwipe.last = {
+                    x : el.ezSwipe.center.x - el.scrollLeft,
+                    y : el.ezSwipe.center.y - el.scrollTop,
+                    t : d - el.ezSwipe.starttime
+                  };
+                  dispatchEvent("swipeMove", delta);
+                }
+                if (el.ezSwipe.timer) {
+                  clearTimeout(el.ezSwipe.timer);
+                }
+                el.ezSwipe.timer = setTimeout(function() {
+                  el.ezSwipe.timer = null;
+                  d = new Date().getTime();
+                  delta = {
+                    x : el.ezSwipe.center.x - el.scrollLeft,
+                    y : el.ezSwipe.center.y - el.scrollTop,
+                    t : d - el.ezSwipe.starttime
+                  };
+                  el.ezSwipe.last = delta;
+                  dispatchEvent("swipeEnd", delta);
+                  if (Math.abs(delta.y) > Math.abs(delta.x)) {
+                    if (delta.y < 0) {
+                      dispatchEvent("swipeUp", delta);
+                    } else {
+                      dispatchEvent("swipeDown", delta);
+                    }
+                  } else {
+                    if (delta.x < 0) {
+                      dispatchEvent("swipeLeft", delta);
+                    } else {
+                      dispatchEvent("swipeRight", delta);
+                    }
+                  }
+                  el.ezSwipe.scrolling = false;
+                  _droid_swipe(el);
+                }, 100);
+              }
+            };
+          };
+          _ezSwipes = document.querySelectorAll("._ezswipe");
+          for (i = 0;i < _ezSwipes.length; i++) {
+            ezswipe_container = document.createElement("div"), 
+            ezswipe_container.classList.add("_ezswipe_container"), 
+            _ezSwipes[i].style.overflow = "hidden", 
+            style = ezswipe_container.style, 
+            style.webkitUserSelect = "none", 
+            style.webkitOverflowScrolling = "touch", 
+            style.overflow = "auto", 
+            style.opacity = 0, 
+            style.top = 0, 
+            style.left = 0, 
+            style.position = "absolute", 
+            style.width = _ezSwipes[i].offsetWidth > document.width ? document.width + "px" : _ezSwipes[i].offsetWidth + "px", 
+            style.height = _ezSwipes[i].offsetHeight > document.height ? document.height + "px" : _ezSwipes[i].offsetHeight + "px", 
+            ezswipe_surface = document.createElement("div"), ezswipe_surface.classList.add("_ezswipe_surface"), 
+            style = ezswipe_surface.style, 
+            style.position = "relative", 
+            style.width = "300%", 
+            style.height = "300%", 
+            ezswipe_container.appendChild(ezswipe_surface), 
+            _droid_swipe(_ezSwipes[i].insertBefore(ezswipe_container,_ezSwipes[i].firstElementChild));
+            console.log('Initialized Android swipe shim');
+          };
+        })();
+      </script>
+
+
+    <script>
+      $(document).ready(function() {
+        p3v({
+          reverse: true
+        });
+      });
+    </script>
+
+  </body>
+</html>
