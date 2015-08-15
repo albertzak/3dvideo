@@ -10,8 +10,10 @@ Encode your video in three different formats.
 
 For older browsers, extract still frames from your video.
 
-    ffmpeg -i input.mp4 -s hd1080 -r 3 image/image-%3d.jpg
-
+    ffmpeg -i input.mp4 -s hd1080 -r 3 image/1080/image-%3d.jpg
+    ffmpeg -i input.mp4 -s hd480 -r 3 image/480/image-%3d.jpg
+    jpegoptim image/1080/*.jpg
+    jpegoptim image/480/*.jpg
 
 # TODO
  - Start with one image. Progressively enhance with either video on canvas or photos
@@ -27,4 +29,4 @@ For older browsers, extract still frames from your video.
 
 # BUGS
  - Video stops updating after some time - recreate DOM element after idle
-
+ - Must have a Doctype (check when embedding!)
